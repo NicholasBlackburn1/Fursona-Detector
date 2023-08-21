@@ -1,29 +1,29 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-def extract_character_links_selenium(url):
-    # Make sure to have the appropriate driver for the browser you want to use
-    # This example uses Chrome
-    driver = webdriver.Chrome()
-    driver.get(url)
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-    # Let the content load (you might need to adjust the sleep duration)
-    driver.implicitly_wait(10)
-
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
-
-    # Extract <a> tags with the specific class
-    a_tags = soup.find_all( class_='index-child character nothumb')
-
-
-
-
-    # Extract href attributes from the <a> tags
-    character_links = ["https://www.furtrack.com" + a['href'] for a in a_tags if a.has_attr('href')]
-    print(character_links)
-    driver.quit()
-
-    return character_links
-
+# Define your URL
 url = 'https://www.furtrack.com/index/species:fox'
-print(extract_character_links_selenium(url))
+
+# Set up the Selenium WebDriver
+driver = webdriver.Chrome()
+driver.get(url)
+
+try:
+    # Wait for up to 10 seconds until the desired elements are present on the page.
+    a_tags = WebDriverWait(driver, 10).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a.index-child.character.nothumb'))
+    )
+
+    # If found, extract and print the links.
+    for a in a_tags:
+        link = a.get_attribute('href')
+        print(link)
+
+finally:
+    driver.quit()  # Ensure the browser closes even if there's an error.
+
