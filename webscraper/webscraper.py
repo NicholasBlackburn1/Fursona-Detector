@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 def extract_character_links_selenium(url):
     # Make sure to have the appropriate driver for the browser you want to use
     # This example uses Chrome
-    driver = webdriver.Chrome(executable_path='../webscraper/chrome-driver/chromedriver')
+    driver = webdriver.Chrome()
     driver.get(url)
 
     # Let the content load (you might need to adjust the sleep duration)
@@ -13,7 +13,7 @@ def extract_character_links_selenium(url):
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
     # Extract <a> tags with the specific class
-    a_tags = soup.find_all('a', class_='index-child character')
+    a_tags = soup.find_all('a')
 
     # Extract href attributes from the <a> tags
     character_links = ["https://www.furtrack.com" + a['href'] for a in a_tags if a.has_attr('href')]
