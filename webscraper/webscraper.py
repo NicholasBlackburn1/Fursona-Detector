@@ -1,19 +1,16 @@
-import requests
+from selenium import webdriver
 from bs4 import BeautifulSoup
 
-def extract_links(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'
-    }
+def extract_character_links_selenium(url):
+    # Make sure to have the appropriate driver for the browser you want to use
+    # This example uses Chrome
+    driver = webdriver.Chrome(executable_path='/path/to/chromedriver')
+    driver.get(url)
 
-    response = requests.get(url, headers=headers)
+    # Let the content load (you might need to adjust the sleep duration)
+    driver.implicitly_wait(10)
 
-    if response.status_code != 200:
-        print("Failed to retrieve the webpage.")
-        return None
-
-
-    soup = BeautifulSoup(response.content, 'html.parser')
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
 
     # Extract <a> tags with the specific class
     a_tags = soup.find_all('a', class_='index-child character')
@@ -21,8 +18,9 @@ def extract_links(url):
     # Extract href attributes from the <a> tags
     character_links = ["https://www.furtrack.com" + a['href'] for a in a_tags if a.has_attr('href')]
 
-    print(character_links)
+    driver.quit()
+
     return character_links
 
 url = 'https://www.furtrack.com/index/species:fox'
-print(extract_links(url))
+print(extract_character_links_selenium(url))
