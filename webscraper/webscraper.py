@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 def extract_character_links_selenium(url):
     # Make sure to have the appropriate driver for the browser you want to use
     # This example uses Chrome
-    driver = webdriver.Chrome(executable_path='/path/to/chromedriver')
+    driver = webdriver.Chrome(executable_path='../webscraper/chrome-driver/chromedriver')
     driver.get(url)
 
     # Let the content load (you might need to adjust the sleep duration)
