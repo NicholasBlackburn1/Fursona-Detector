@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 # Define your URL
-url = 'https://www.furtrack.com/index/species:fox'
+url = 'https://www.furtrack.com/index/species:dragon'
 
 
 def downloadSingleImage(driver,url):
@@ -17,7 +17,7 @@ def downloadSingleImage(driver,url):
 
     # Wait for up to 10 seconds until the desired elements are present on the page.
     img_tags = WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.index-grid.index-image'))
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-grid.index-image.index-image-actual'))
     )
 
     # If found, extract and print the links.
