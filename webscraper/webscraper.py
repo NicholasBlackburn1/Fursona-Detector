@@ -9,6 +9,9 @@ from selenium.webdriver.support import expected_conditions as EC
 # Define your URL
 url = 'https://www.furtrack.com/index/species:fox'
 
+
+
+
 # Set up the Selenium WebDriver
 driver = webdriver.Chrome()
 driver.get(url)
@@ -23,6 +26,9 @@ try:
     for a in a_tags:
         link = a.get_attribute('href')
         print(link)
+
+
+
 
 finally:
     driver.quit()  # Ensure the browser closes even if there's an error.
