@@ -13,11 +13,14 @@ def extract_character_links_selenium(url):
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
     # Extract <a> tags with the specific class
-    a_tags = soup.find_all('a')
+    a_tags = soup.find_all( class_='index-child character nothumb')
+
+
+
 
     # Extract href attributes from the <a> tags
     character_links = ["https://www.furtrack.com" + a['href'] for a in a_tags if a.has_attr('href')]
-
+    print(character_links)
     driver.quit()
 
     return character_links
