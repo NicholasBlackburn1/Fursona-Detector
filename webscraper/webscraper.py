@@ -12,15 +12,17 @@ def extract_links(url):
         print("Failed to retrieve the webpage.")
         return None
 
+
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    # Extract all <a> tags
-    a_tags = soup.find_all('a')
+    # Extract <a> tags with the specific class
+    a_tags = soup.find_all('a', class_='index-child character')
 
     # Extract href attributes from the <a> tags
-    links = [a['href'] for a in a_tags if a.has_attr('href')]
+    character_links = ["https://www.furtrack.com" + a['href'] for a in a_tags if a.has_attr('href')]
 
-    return links
+    print(character_links)
+    return character_links
 
 url = 'https://www.furtrack.com/index/species:fox'
 print(extract_links(url))
