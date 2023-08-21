@@ -42,6 +42,7 @@ try:
     for a in a_tags:
         link = a.get_attribute('href')
         print(link)
+        downloadSingleImage(driver,link)
 
 
 
