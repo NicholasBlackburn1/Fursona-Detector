@@ -1,4 +1,5 @@
 import time
+import logger
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
@@ -10,7 +11,7 @@ import consts
 import re
 # Define your URL fopr unsotrd
 url = 'https://www.furtrack.com/index/species:dragon'
-
+# extracts fiel names fro the url
 def extract_filename_from_url(url):
     match = re.search(r'/([^/]+?)(\?|$)', url)
     return match.group(1) if match else None
@@ -67,41 +68,45 @@ def downloadSingleImage(driver,url):
 # this schrools the page and grabs all the images on that page
 
 def downloadmultiple(driver, url):
-
-    print("tryinng to downklaod a bunch of images...")
-
+    logger.info("Starting up web scraper to scrape fursuits....")
     driver.get(url)
 
+    logger.warning("set scrool time too 7 seconds...")
     SCROLL_PAUSE_TIME = 7  # time to wait for content to load, you can adjust this
-    last_height = driver.execute_script("return document.body.scrollHeight")  # get the initial height of the document
+
+    logger.PipeLine_Ok("set school time to 7 seconds")
 
 
 
     while True:
 
+        logger.Warning("starting to schrool...")
         # Scroll down to the bottom incrementally
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
         # Wait for content to load
         time.sleep(SCROLL_PAUSE_TIME)
 
+        logger.PipeLine_Ok("done scrooling time to download images")
         # Calculate new scroll height and compare with last scroll height
         new_height = driver.execute_script("return document.body.scrollHeight")
         if new_height == last_height:  # if heights are the same after waiting, we've probably reached the bottom
             break
         last_height = new_height
 
+        logger.warning("found images....")
         # Wait for up to 10 seconds until the desired elements are present on the page.
         img_tags = WebDriverWait(driver, 300).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
         )
-     lastlink = ""
+
 
         # If found, extract and print the links.
         for a in img_tags:
             link = a.get_attribute('src')
-            lastlink =  extract_filename_from_url(link)
             print(link)
+            consts.lastlink = extract_filename_from_url(link)
+
 
 
 
