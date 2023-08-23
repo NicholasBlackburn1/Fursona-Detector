@@ -1,8 +1,9 @@
+import os
 import time
 import logger
 from selenium import webdriver
 from bs4 import BeautifulSoup
-
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,7 +13,19 @@ import re
 import wget
 
 
+#downloads images from websirtre
+def download_image(link, output_path):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0'
+    }
+    response = requests.get(link, headers=headers)
 
+    # Only write the content if we get a good response
+    if response.status_code == 200:
+        with open(output_path, 'wb') as f:
+            f.write(response.content)
+    else:
+        print(f"Failed to download {link}. Status code: {response.status_code}")
 
 # extracts fiel names fro the url
 def extract_filename_from_url(url):
@@ -108,10 +121,18 @@ def downloadmultiple(driver, url):
             logger.PipeLine_Ok("last image name is" +consts.lastlink)
             logger.info("img link is "+link)
 
+            directory = "/home/nicky/Documents/furryclassart/webscraper/dataset/dragon"
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
+            logger.PipeLine_Ok("last image name is" +consts.lastlink)
+            logger.info("img link is "+link)
+
             logger.warning("downloading image to /home/nicky/Documents/furryclassart/webscraper/dataset/dragon")
 
-
-
+            # Using wget to download the image to the specified directory
+            output_path = os.path.join(directory, consts.lastlink+".png")
+            download_image(link, output_path)
 
 
 
