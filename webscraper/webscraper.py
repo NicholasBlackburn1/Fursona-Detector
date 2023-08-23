@@ -12,11 +12,7 @@ import re
 url = 'https://www.furtrack.com/index/species:dragon'
 
 def extract_filename_from_url(url):
-    match = re.search(r'/([^/]+1) if match else None
-
-#unsotrtred randomly grabbing imagwes from furtyrsck in a catagory
-def unsortedimagesurl(url):
-?)(\?|$)', url)
+    match = re.search(r'/([^/]+?)(\?|$)', url)
     return match.group(1) if match else None
 
 #unsotrtred randomly grabbing imagwes from furtyrsck in a catagory
@@ -98,11 +94,13 @@ def downloadmultiple(driver, url):
         # Wait for up to 10 seconds until the desired elements are present on the page.
         img_tags = WebDriverWait(driver, 300).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
+        )
+     lastlink = ""
 
         # If found, extract and print the links.
         for a in img_tags:
             link = a.get_attribute('src')
-
+            lastlink =  extract_filename_from_url(link)
             print(link)
 
 
