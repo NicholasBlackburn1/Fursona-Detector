@@ -6,10 +6,36 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Define your URL
+# Define your URL fopr unsotrd
 url = 'https://www.furtrack.com/index/species:dragon'
 
+#unsotrtred randomly grabbing imagwes from furtyrsck in a catagory
+def unsortedimagesurl(url):
 
+    # Set up the Selenium WebDriver
+    driver = webdriver.Chrome()
+    driver.get(url)
+
+    try:
+        # Wait for up to 10 seconds until the desired elements are present on the page.
+        a_tags = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a.index-child.character.nothumb'))
+        )
+        links = [a.get_attribute('href') for a in a_tags]
+
+        # If found, extract and print the links.
+        for link in links:
+                print(link)
+                downloadSingleImage(driver, link)
+
+
+
+
+    finally:
+        driver.quit()  # Ensure the browser closes even if there's an error.
+
+
+# gets single omages from users in a catagory
 def downloadSingleImage(driver,url):
     i =0
     print("tryinng to downklaod")
@@ -32,7 +58,7 @@ def downloadSingleImage(driver,url):
             return
         return
 
-
+def downloadmultiple(driver, url):
 
 
 
@@ -40,21 +66,7 @@ def downloadSingleImage(driver,url):
 driver = webdriver.Chrome()
 driver.get(url)
 
-try:
-    # Wait for up to 10 seconds until the desired elements are present on the page.
-    a_tags = WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a.index-child.character.nothumb'))
-    )
-    links = [a.get_attribute('href') for a in a_tags]
+downloadSingleImage(driver,"https://www.furtrack.com/index/solo_focus+dragon")
 
-    # If found, extract and print the links.
-    for link in links:
-            print(link)
-            downloadSingleImage(driver, link)
-
-
-
-
-finally:
-    driver.quit()  # Ensure the browser closes even if there's an error.
+driver.quit()  # Ensure the browser closes even if there's an error.
 
