@@ -11,6 +11,7 @@ url = 'https://www.furtrack.com/index/species:dragon'
 
 
 def downloadSingleImage(driver,url):
+    i =0
     print("tryinng to downklaod")
 
     driver.get(url)
@@ -21,7 +22,16 @@ def downloadSingleImage(driver,url):
     )
 
     # If found, extract and print the links.
-    print(img_tags)
+
+    # If found, extract and print the links.
+    for a in img_tags:
+        link = a.get_attribute('src')
+        print(link)
+        i = 1
+        if(i == 1):
+            return
+        return
+
 
 
 
@@ -35,12 +45,12 @@ try:
     a_tags = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a.index-child.character.nothumb'))
     )
+    links = [a.get_attribute('href') for a in a_tags]
 
     # If found, extract and print the links.
-    for a in a_tags:
-        link = a.get_attribute('href')
-        print(link)
-        downloadSingleImage(driver,link)
+    for link in links:
+            print(link)
+            downloadSingleImage(driver, link)
 
 
 
