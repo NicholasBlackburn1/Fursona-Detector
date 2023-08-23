@@ -9,8 +9,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import consts
 import re
-# Define your URL fopr unsotrd
-url = 'https://www.furtrack.com/index/species:dragon'
+
+
+# smooth scrooling for the app to get all the images withlut me schooling
+def smooth_scroll(driver, scroll_pause_time=0.7, max_scrolls=100):
+    y_position = 0
+    scrolls_performed = 0
+
+    while scrolls_performed < max_scrolls:
+        driver.execute_script(f"window.scrollBy(0, 400);")  # scrolling by 400 pixels
+        scrolls_performed += 1
+        time.sleep(scroll_pause_time)  # allow for the page to load
+
 # extracts fiel names fro the url
 def extract_filename_from_url(url):
     match = re.search(r'/([^/]+?)(\?|$)', url)
@@ -72,8 +82,8 @@ def downloadmultiple(driver, url):
     driver.get(url)
 
     logger.warning("set scrool time too 7 seconds...")
-    SCROLL_PAUSE_TIME = 7  # time to wait for content to load, you can adjust this
-
+    SCROLL_PAUSE_TIME = 0.7  # time to wait for content to load, you can adjust this
+    smooth_scroll(driver,SCROLL_PAUSE_TIME,100)
     logger.PipeLine_Ok("set school time to 7 seconds")
 
 
