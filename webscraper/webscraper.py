@@ -11,15 +11,7 @@ import consts
 import re
 
 
-# smooth scrooling for the app to get all the images withlut me schooling
-def smooth_scroll(driver, scroll_pause_time=0.7, max_scrolls=100):
-    y_position = 0
-    scrolls_performed = 0
 
-    while scrolls_performed < max_scrolls:
-        driver.execute_script(f"window.scrollBy(0, 400);")  # scrolling by 400 pixels
-        scrolls_performed += 1
-        time.sleep(scroll_pause_time)  # allow for the page to load
 
 # extracts fiel names fro the url
 def extract_filename_from_url(url):
@@ -82,27 +74,18 @@ def downloadmultiple(driver, url):
     driver.get(url)
 
     logger.warning("set scrool time too 7 seconds...")
-    SCROLL_PAUSE_TIME = 0.7  # time to wait for content to load, you can adjust this
-    smooth_scroll(driver,SCROLL_PAUSE_TIME,100)
-    logger.PipeLine_Ok("set school time to 7 seconds")
 
+    y_position = 0
+    scrolls_performed = 0
 
-
-    while True:
-
-        logger.Warning("starting to schrool...")
-        # Scroll down to the bottom incrementally
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
-        # Wait for content to load
-        time.sleep(SCROLL_PAUSE_TIME)
+    while scrolls_performed < 100:
+        driver.execute_script(f"window.scrollBy(0, 400);")  # scrolling by 400 pixels
+        scrolls_performed += 1
+        time.sleep(7)  # allow for the page to load
 
         logger.PipeLine_Ok("done scrooling time to download images")
         # Calculate new scroll height and compare with last scroll height
-        new_height = driver.execute_script("return document.body.scrollHeight")
-        if new_height == last_height:  # if heights are the same after waiting, we've probably reached the bottom
-            break
-        last_height = new_height
+
 
         logger.warning("found images....")
         # Wait for up to 10 seconds until the desired elements are present on the page.
@@ -123,7 +106,6 @@ def downloadmultiple(driver, url):
 
 # Set up the Selenium WebDriver
 driver = webdriver.Chrome()
-driver.get(url)
 
 downloadmultiple(driver,"https://www.furtrack.com/index/solo_focus+dragon")
 
