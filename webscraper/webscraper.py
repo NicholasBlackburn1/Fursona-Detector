@@ -59,6 +59,8 @@ def downloadSingleImage(driver,url):
             return
         return
 
+# this schrools the page and grabs all the images on that page
+
 def downloadmultiple(driver, url):
 
     print("tryinng to downklaod a bunch of images...")
