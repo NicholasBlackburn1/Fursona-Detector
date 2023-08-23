@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import consts
 import re
+import wget
 
 
 
@@ -106,6 +107,8 @@ def downloadmultiple(driver, url):
 
             logger.PipeLine_Ok("last image name is" +consts.lastlink)
             logger.info("img link is "+link)
+
+            logger.warning("downloading image to /home/nicky/Documents/furryclassart/webscraper/dataset/dragon")
 
 
 
