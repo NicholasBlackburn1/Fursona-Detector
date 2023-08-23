@@ -79,6 +79,7 @@ def downloadmultiple(driver, url):
     scrolls_performed = 0
 
     while scrolls_performed < 100:
+
         driver.execute_script(f"window.scrollBy(0, 400);")  # scrolling by 400 pixels
         scrolls_performed += 1
         time.sleep(7)  # allow for the page to load
@@ -87,18 +88,25 @@ def downloadmultiple(driver, url):
         # Calculate new scroll height and compare with last scroll height
 
 
-        logger.warning("found images....")
+
         # Wait for up to 10 seconds until the desired elements are present on the page.
         img_tags = WebDriverWait(driver, 300).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
         )
 
-
+        logger.warning("found images....")
         # If found, extract and print the links.
+
+
+        # Refresh the window to show the updated line
+
         for a in img_tags:
             link = a.get_attribute('src')
-            print(link)
             consts.lastlink = extract_filename_from_url(link)
+
+            logger.PipeLine_Ok("last image name is" +consts.lastlink)
+            logger.info("img link is "+link)
+
 
 
 
@@ -107,7 +115,11 @@ def downloadmultiple(driver, url):
 # Set up the Selenium WebDriver
 driver = webdriver.Chrome()
 
-downloadmultiple(driver,"https://www.furtrack.com/index/solo_focus+dragon")
+logger.PipeLine_init("stasrting up webscraper for FURTRACK...")
+url = "https://www.furtrack.com/index/solo_focus+dragon"
+
+logger.warning("scraping url = "+ url)
+downloadmultiple(driver,url)
 
 driver.quit()  # Ensure the browser closes even if there's an error.
 
