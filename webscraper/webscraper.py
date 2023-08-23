@@ -1,3 +1,4 @@
+import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
@@ -64,17 +65,36 @@ def downloadmultiple(driver, url):
 
     driver.get(url)
 
-    # Wait for up to 10 seconds until the desired elements are present on the page.
-    img_tags = WebDriverWait(driver, 300).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
-    )
+    SCROLL_PAUSE_TIME = 2  # time to wait for content to load, you can adjust this
+    last_height = driver.execute_script("return document.body.scrollHeight")  # get the initial height of the document
 
-    # If found, extract and print the links.
 
-    # If found, extract and print the links.
-    for a in img_tags:
-        link = a.get_attribute('src')
-        print(link)
+
+    while True:
+
+        # Scroll down to the bottom incrementally
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+        # Wait for content to load
+        time.sleep(SCROLL_PAUSE_TIME)
+
+        # Calculate new scroll height and compare with last scroll height
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:  # if heights are the same after waiting, we've probably reached the bottom
+            break
+        last_height = new_height
+
+        # Wait for up to 10 seconds until the desired elements are present on the page.
+        img_tags = WebDriverWait(driver, 300).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
+        )
+
+        # If found, extract and print the links.
+
+        # If found, extract and print the links.
+        for a in img_tags:
+            link = a.get_attribute('src')
+            print(link)
 
 
 # Set up the Selenium WebDriver
