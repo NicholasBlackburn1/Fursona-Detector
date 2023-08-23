@@ -7,8 +7,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+import re
 # Define your URL fopr unsotrd
 url = 'https://www.furtrack.com/index/species:dragon'
+
+def extract_filename_from_url(url):
+    match = re.search(r'/([^/]+?)(\?|$)', url)
+    return match.group(1) if match else None
 
 #unsotrtred randomly grabbing imagwes from furtyrsck in a catagory
 def unsortedimagesurl(url):
@@ -67,7 +72,7 @@ def downloadmultiple(driver, url):
 
     driver.get(url)
 
-    SCROLL_PAUSE_TIME = 2  # time to wait for content to load, you can adjust this
+    SCROLL_PAUSE_TIME = 7  # time to wait for content to load, you can adjust this
     last_height = driver.execute_script("return document.body.scrollHeight")  # get the initial height of the document
 
 
@@ -90,8 +95,6 @@ def downloadmultiple(driver, url):
         img_tags = WebDriverWait(driver, 300).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
         )
-
-        # If found, extract and print the links.
 
         # If found, extract and print the links.
         for a in img_tags:
