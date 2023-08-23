@@ -6,13 +6,17 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import consts
 import re
 # Define your URL fopr unsotrd
 url = 'https://www.furtrack.com/index/species:dragon'
 
 def extract_filename_from_url(url):
-    match = re.search(r'/([^/]+?)(\?|$)', url)
+    match = re.search(r'/([^/]+1) if match else None
+
+#unsotrtred randomly grabbing imagwes from furtyrsck in a catagory
+def unsortedimagesurl(url):
+?)(\?|$)', url)
     return match.group(1) if match else None
 
 #unsotrtred randomly grabbing imagwes from furtyrsck in a catagory
@@ -94,12 +98,14 @@ def downloadmultiple(driver, url):
         # Wait for up to 10 seconds until the desired elements are present on the page.
         img_tags = WebDriverWait(driver, 300).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
-        )
 
         # If found, extract and print the links.
         for a in img_tags:
             link = a.get_attribute('src')
+
             print(link)
+
+
 
 
 # Set up the Selenium WebDriver
