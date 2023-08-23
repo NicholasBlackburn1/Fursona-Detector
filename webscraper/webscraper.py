@@ -17,13 +17,11 @@ def downloadSingleImage(driver,url):
 
     # Wait for up to 10 seconds until the desired elements are present on the page.
     img_tags = WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-grid.index-image.index-image-actual'))
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
     )
 
     # If found, extract and print the links.
-    for a in img_tags:
-        link = a.get_attribute('src')
-        print(link)
+    print(img_tags)
 
 
 
