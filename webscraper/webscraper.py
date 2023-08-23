@@ -60,13 +60,28 @@ def downloadSingleImage(driver,url):
 
 def downloadmultiple(driver, url):
 
+    print("tryinng to downklaod a bunch of images...")
+
+    driver.get(url)
+
+    # Wait for up to 10 seconds until the desired elements are present on the page.
+    img_tags = WebDriverWait(driver, 300).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.index-image-actual'))
+    )
+
+    # If found, extract and print the links.
+
+    # If found, extract and print the links.
+    for a in img_tags:
+        link = a.get_attribute('src')
+        print(link)
 
 
 # Set up the Selenium WebDriver
 driver = webdriver.Chrome()
 driver.get(url)
 
-downloadSingleImage(driver,"https://www.furtrack.com/index/solo_focus+dragon")
+downloadmultiple(driver,"https://www.furtrack.com/index/solo_focus+dragon")
 
 driver.quit()  # Ensure the browser closes even if there's an error.
 
