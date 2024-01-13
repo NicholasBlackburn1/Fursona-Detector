@@ -121,14 +121,14 @@ def downloadmultiple(driver, url):
             logger.PipeLine_Ok("last image name is" +consts.lastlink)
             logger.info("img link is "+link)
 
-            directory = "/home/nicky/Documents/furryclassart/webscraper/dataset/wolf"
+            directory = "/home/nicky/Documents/furryclassart/webscraper/dataset/cat"
             if not os.path.exists(directory):
                 os.makedirs(directory)
 
             logger.PipeLine_Ok("last image name is" +consts.lastlink)
             logger.info("img link is "+link)
 
-            logger.warning("downloading image to /home/nicky/Documents/furryclassart/webscraper/dataset/wolf")
+            logger.warning("downloading image to /home/nicky/Documents/furryclassart/webscraper/dataset/cat")
 
             # Using wget to download the image to the specified directory
             output_path = os.path.join(directory, consts.lastlink+".png")
