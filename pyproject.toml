@@ -5,7 +5,7 @@ description = "A fursona recon dnn model"
 authors = ["NickyBlackburn <nickblackburn02@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.10.*"
+python = "3.11.*"
 tensorflow = "^2.13.0"
 
 requests = "^2.31.0"
@@ -13,6 +13,7 @@ beautifulsoup4 = "^4.12.2"
 selenium = "^4.16.0"
 colorama = "^0.4.6"
 wget = "^3.2"
+pillow = "^10.2.0"
 
 
 [build-system]

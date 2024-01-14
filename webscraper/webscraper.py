@@ -121,14 +121,14 @@ def downloadmultiple(driver, url):
             logger.PipeLine_Ok("last image name is" +consts.lastlink)
             logger.info("img link is "+link)
 
-            directory = "/home/nicky/Documents/furryclassart/webscraper/dataset/cat"
+            directory = "/home/nicky-blackburn/Documents/Fursona-Detector/webscraper/dataset/canine"
             if not os.path.exists(directory):
                 os.makedirs(directory)
 
             logger.PipeLine_Ok("last image name is" +consts.lastlink)
             logger.info("img link is "+link)
 
-            logger.warning("downloading image to /home/nicky/Documents/furryclassart/webscraper/dataset/cat")
+            logger.warning("downloading image to /home/nicky-blackburn/Documents/furryclassart/webscraper/dataset/canine")
 
             # Using wget to download the image to the specified directory
             output_path = os.path.join(directory, consts.lastlink+".png")
@@ -140,7 +140,7 @@ def downloadmultiple(driver, url):
 driver = webdriver.Chrome()
 
 logger.PipeLine_init("stasrting up webscraper for FURTRACK...")
-url = "https://www.furtrack.com/index/solo_focus+wolf"
+url = "https://www.furtrack.com/index/solo_focus+canine"
 
 logger.warning("scraping url = "+ url)
 downloadmultiple(driver,url)
