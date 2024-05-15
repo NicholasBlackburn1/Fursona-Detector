@@ -44,5 +44,6 @@ for class_label in class_labels:
         predicted_class_name = class_labels[predicted_class]
         print(f"Predicted Class Name: {predicted_class_name}")
         
+        
     else:
         print("I'm sorry but it doesn't meet my quality standards... What standards? I'm a Furry~")

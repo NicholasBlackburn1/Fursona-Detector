@@ -170,3 +170,5 @@ cython_debug/
 dataset/
 fursonaclassifiyer.h5
 fursonaclassifiyer.keras
+
+*.pt

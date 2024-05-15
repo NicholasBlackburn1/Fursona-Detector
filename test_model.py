@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import cv2
+import json
 
 # Load your pre-trained classifier model
 model_path = "/home/nicky-blackburn/Documents/Fursona-Detector/fursonaclassifiyer.h5"
@@ -15,8 +16,11 @@ img_array = cv2.resize(full_res_img, (150, 150))  # Resize to model input size
 img_array = np.expand_dims(img_array, axis=0)
 img_array = img_array / 255.0  # Normalize pixel values to [0, 1]
 
-# Define your class labels
-class_labels = ["bovine", "canine", "cervine", "hybrid", "mustelid", "mythical", "scalie"]
+# Load class labels from JSON file
+json_path = 'class_names.json'
+with open(json_path, 'r') as json_file:
+    class_labels = json.load(json_file)
+
 
 #the thresh of too keep the ml at bey 
 threshold = 0.5
