@@ -1,6 +1,6 @@
-# Fursona-Detector
+# Fursona of the wild 
 
-** A Fursona  Specises Dector and reconizer**
+** A Fursona  Specises Dector**
 
 ### What is  he goal of tyhis project?
 
