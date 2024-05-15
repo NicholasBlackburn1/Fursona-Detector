@@ -17,6 +17,9 @@ scipy = "^1.11.4"
 tensorflow = "2.14.0"
 opencv-python = "^4.9.0.80"
 matplotlib = "^3.8.2"
+torch = "^2.3.0"
+timm = "^1.0.3"
+tk = "^0.1.0"
 
 
 [build-system]
