@@ -11,7 +11,7 @@ from tensorflow.keras.callbacks import TensorBoard
 from datetime import datetime
 
 
-# Set up TensorBoard
+# Set up Tensor
 log_dir = "logs/fit/" + datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
 
@@ -80,4 +80,4 @@ history = model.fit(
 )
 
 # Save Model
-model.save('fursonaclassifiyer.h5')
+model.save('fursonaclassifiyer.keras')
