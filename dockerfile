@@ -13,20 +13,17 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Add Poetry to the system path
-ENV PATH="${PATH}:/root/.poetry/bin"
+ENV PATH="/root/.poetry/bin:${PATH}"
 
 
 # Set working directory
 WORKDIR /app
 
-# Copy only the poetry files first to leverage Docker layer caching
-COPY poetry.lock pyproject.toml /app/
-
 # Install dependencies
 CMD ["/root/.poetry/bin/poetry", "install",  "--no-root --no-interaction"]
 
 # Copy the rest of the application code
-COPY . /app
+COPY .. /app
 
 # Specify the command to run on container start
 CMD ["/root/.poetry/bin/poetry", "run", "python3 random_model.py"]
