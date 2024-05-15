@@ -29,4 +29,4 @@ CMD ["/root/.poetry/bin/poetry", "install",  "--no-root --no-interaction"]
 COPY . /app
 
 # Specify the command to run on container start
-CMD ["poetry", "run", "python3 train_model.py"]
+CMD ["/root/.poetry/bin/poetry", "run", "python3 random_model.py"]
