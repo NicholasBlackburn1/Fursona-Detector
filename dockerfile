@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Add Poetry to the system path
-ENV PATH="/root/.poetry/bin:${PATH}"
+ENV PATH="${PATH}:/root/.poetry/bin"
+
 
 # Set working directory
 WORKDIR /app
@@ -22,7 +23,7 @@ WORKDIR /app
 COPY poetry.lock pyproject.toml /app/
 
 # Install dependencies
-RUN poetry install --no-root --no-interaction
+CMD ["/root/.poetry/bin/poetry", "install",  "--no-root --no-interaction"]
 
 # Copy the rest of the application code
 COPY . /app
