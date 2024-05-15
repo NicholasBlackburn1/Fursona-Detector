@@ -40,10 +40,19 @@ for class_label in class_labels:
         # Print the corresponding class name
         predicted_class_name = class_labels[predicted_class]
         print(f"Predicted Class Name: {predicted_class_name}")
+        
+        
+        # Apply Gaussian blur to the background
+        blurred_background = cv2.GaussianBlur(image, (15, 15), 0)
+
+        # Merge the foreground and blurred background
+        result = cv2.bitwise_and(image, image, mask=foreground_mask)
+        result += cv2.bitwise_and(blurred_background, blurred_background, mask=background_mask)
+
 
         # Draw bounding box on the full-resolution image
-        cv2.putText(full_res_img, f"Class: {predicted_class_name}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        cv2.putText(full_res_img, f"Acc:{predictions[0][predicted_class]}", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(result, f"Class: {predicted_class_name}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(result, f"Acc:{predictions[0][predicted_class]}", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
         # Display the image with bounding boxes
         cv2.imshow("Full Resolution Image with Prediction", full_res_img)
