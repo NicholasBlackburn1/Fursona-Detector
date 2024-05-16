@@ -1,13 +1,25 @@
 import cv2
 import torch
 import numpy as np
+import logger
+
+logger.PipeLine_init("Loading the midas model..")
 
 # Load the MiDaS model
 model_type = "DPT_Large"  # Choose MiDaS model type
 midas = torch.hub.load("intel-isl/MiDaS", model_type)
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+    logger.warning("Midas going to run on gpu....")
+else:
+    device = torch.device("cpu")
+    logger.warning("Midas going to run on cpu....")
+    
 midas.to(device)
 midas.eval()
+
+logger.PipeLine_Ok("Midas Loaded....")
 
 # Load the image
 img = cv2.imread('/home/nicky-blackburn/Documents/Fursona-Detector/test/610hnlw0-2L._AC_UY1000_.jpg')
@@ -27,13 +39,13 @@ with torch.no_grad():
     prediction = torch.nn.functional.interpolate(
         prediction.unsqueeze(1),
         size=img.shape[:2],
-        mode="bicubic",
+        mode="bilinear",  # Change interpolation method to bilinear
         align_corners=False,
     ).squeeze()
 
 # Apply threshold to create mask
 threshold = 1.0  # Adjust threshold as needed
-mask = (prediction > threshold).cpu().numpy()
+mask = (prediction).cpu().numpy()
 
 # Create a foreground image with white background
 foreground = np.full_like(img, 255)
