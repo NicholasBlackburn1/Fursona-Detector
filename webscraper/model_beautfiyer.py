@@ -35,9 +35,11 @@ with torch.no_grad():
 threshold = 1.0  # Adjust threshold as needed
 mask = (prediction > threshold).cpu().numpy()
 
-# Remove background using the mask
-foreground = img.copy()
-foreground[~mask] = 6  # Set non-masked pixels to white (255)
+# Create a foreground image with white background
+foreground = np.full_like(img, 255)
+
+# Copy pixels from the original image to the foreground based on the mask
+foreground[mask] = img[mask]
 
 # Display the foreground
 cv2.imshow('Foreground', cv2.cvtColor(foreground, cv2.COLOR_RGB2BGR))
