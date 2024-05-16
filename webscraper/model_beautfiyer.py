@@ -69,20 +69,31 @@ print("Min depth:", prediction.min().item())
 print("Max depth:", prediction.max().item())
 
 # Visualize the depth map
+depth_threshold = 0.5
 depth_map = ((prediction - prediction.min()) / (prediction.max() - prediction.min()) * 255).cpu().numpy().astype(np.uint8)
 
+normalized_depth = (prediction - prediction.min()) / (prediction.max() - prediction.min())
 
-masked_img = img.copy()
-# Invert the mask
-inverted_mask = cv2.bitwise_not(mask)
+# Threshold to create the mask
+depth_threshold = 0.5  # Adjust threshold as needed
+depth_mask = (normalized_depth < depth_threshold).cpu().numpy()
 
-# Apply the inverted mask to the original image to remove background
-foreground = cv2.bitwise_and(img, img, mask=inverted_mask)
+# Convert the depth mask to binary (0 or 255)
+depth_mask = (depth_mask * 255).astype(np.uint8)
+
+# Invert the depth mask
+inverted_depth_mask = cv2.bitwise_not(depth_mask)
+
+# Apply the inverted depth mask to the original image to remove background
+foreground = cv2.bitwise_and(img, img, mask=inverted_depth_mask)
 
 # Display the masked image
-cv2.imshow('Masked Image', cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR))
+if foreground is None:
+    logger.Error("Masked image is empty. There might be an issue with the mask or the original image.")
+else:
+    # Display the masked depth map image
 
-# Display the masked depth map image
-cv2.imshow('Depth Map', depth_map)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    cv2.imshow('Masked Image', cv2.cvtColor(foreground, cv2.COLOR_RGB2BGR))
+    cv2.imshow('Depth Map', depth_map)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
