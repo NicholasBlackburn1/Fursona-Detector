@@ -32,13 +32,14 @@ with torch.no_grad():
     ).squeeze()
 
 # Apply threshold to create mask
-threshold = 0.5  # Adjust threshold as needed
+threshold = 1.0  # Adjust threshold as needed
 mask = (prediction > threshold).cpu().numpy()
 
 # Remove background using the mask
-foreground = np.where(mask[..., None], img, 255)
+foreground = img.copy()
+foreground[~mask] = 6  # Set non-masked pixels to white (255)
 
-# Display the result
-cv2.imshow('Foreground Image', cv2.cvtColor(foreground, cv2.COLOR_RGB2BGR))
+# Display the foreground
+cv2.imshow('Foreground', cv2.cvtColor(foreground, cv2.COLOR_RGB2BGR))
 cv2.waitKey(0)
 cv2.destroyAllWindows()

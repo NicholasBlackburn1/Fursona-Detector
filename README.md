@@ -26,3 +26,29 @@ Each of these folders in the data set are seperated into " species"  or classifi
 
 
 
+## whats happening sop faor 
+1. got web scraper working 
+2. got the model training
+3. working on backround bluring for cobing the furry model 
+
+
+
+
+## DataCollection
+
+For the data set we  need to collect a bunch of different fursonas with their tag and sort them bi spiese the best place to do this is furtrac a furry fursona database.
+
+
+**IMPORTNAT Model Creation STEPS**
+
+
+- Collect
+- Aggregate
+- Beutifiy
+- Train 
+
+
+
+We **collect** the data and sort it into its own catagory, **AGGEGATE** it and then we Comb threw it and **Beutifiy** it which means remove junk data from the collected data and then we **Train** the model.
+
+and im currently working on getting the beutifiyer working
