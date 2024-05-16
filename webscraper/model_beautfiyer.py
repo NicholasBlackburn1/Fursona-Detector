@@ -25,7 +25,7 @@ logger.PipeLine_Ok("Midas Loaded....")
 
 logger.warning("loading image into opencv...")
 # Load the image
-img = cv2.imread('/home/nicky-blackburn/Documents/Fursona-Detector/test/610hnlw0-2L._AC_UY1000_.jpg')
+img = cv2.imread('/home/nicky-blackburn/Documents/Fursona-Detector/test/61dLWeIGm9L._AC_UY1000_.jpg')
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 logger.PipeLine_Ok("loaded image....")
 
@@ -55,7 +55,7 @@ with torch.no_grad():
     ).squeeze()
 
 # Apply threshold to create mask
-threshold = 1.0  # Adjust threshold as needed
+threshold = 0.4  # Adjust threshold as needed
 mask = (prediction > threshold).cpu().numpy()
 
 # Create a foreground image with white background
@@ -72,9 +72,17 @@ print("Max depth:", prediction.max().item())
 depth_map = ((prediction - prediction.min()) / (prediction.max() - prediction.min()) * 255).cpu().numpy().astype(np.uint8)
 
 
+masked_img = img.copy()
+# Invert the mask
+inverted_mask = cv2.bitwise_not(mask)
 
+# Apply the inverted mask to the original image to remove background
+foreground = cv2.bitwise_and(img, img, mask=inverted_mask)
 
-# Display the masked &depth map image
+# Display the masked image
+cv2.imshow('Masked Image', cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR))
+
+# Display the masked depth map image
 cv2.imshow('Depth Map', depth_map)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
