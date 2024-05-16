@@ -6,30 +6,38 @@ import logger
 logger.PipeLine_init("Loading the midas model..")
 
 # Load the MiDaS model
-model_type = "DPT_Large"  # Choose MiDaS model type
+model_type = "MiDaS_small"  # Choose MiDaS model type
 midas = torch.hub.load("intel-isl/MiDaS", model_type)
 
 if torch.cuda.is_available():
     device = torch.device("cuda")
-    logger.warning("Midas going to run on gpu....")
+    logger.info("Midas going to run on gpu....")
 else:
     device = torch.device("cpu")
-    logger.warning("Midas going to run on cpu....")
-    
+    logger.info("Midas going to run on cpu....")
+
 midas.to(device)
 midas.eval()
 
 logger.PipeLine_Ok("Midas Loaded....")
 
+
+
+logger.warning("loading image into opencv...")
 # Load the image
 img = cv2.imread('/home/nicky-blackburn/Documents/Fursona-Detector/test/610hnlw0-2L._AC_UY1000_.jpg')
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+logger.PipeLine_Ok("loaded image....")
 
 # Transform the image
+logger.warning("trying to transform image....")
+
 midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
 if model_type == "DPT_Large" or model_type == "DPT_Hybrid":
+    logger.info("setting the transform to dpt_transform...")
     transform = midas_transforms.dpt_transform
 else:
+    logger.info("setting the transform to small_transform...")
     transform = midas_transforms.small_transform
 input_batch = transform(img).to(device)
 
@@ -45,7 +53,7 @@ with torch.no_grad():
 
 # Apply threshold to create mask
 threshold = 1.0  # Adjust threshold as needed
-mask = (prediction).cpu().numpy()
+mask = (prediction > threshold).cpu().numpy()
 
 # Create a foreground image with white background
 foreground = np.full_like(img, 255)
@@ -53,7 +61,14 @@ foreground = np.full_like(img, 255)
 # Copy pixels from the original image to the foreground based on the mask
 foreground[mask] = img[mask]
 
-# Display the foreground
-cv2.imshow('Foreground', cv2.cvtColor(foreground, cv2.COLOR_RGB2BGR))
+# Check prediction range
+print("Min depth:", prediction.min().item())
+print("Max depth:", prediction.max().item())
+
+# Visualize the depth map
+depth_map = ((prediction - prediction.min()) / (prediction.max() - prediction.min()) * 255).cpu().numpy().astype(np.uint8)
+
+# Display the depth map
+cv2.imshow('Depth Map', depth_map)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
