@@ -69,17 +69,12 @@ print("Min depth:", prediction.min().item())
 print("Max depth:", prediction.max().item())
 
 # Visualize the depth map
-mask = (prediction < threshold).cpu().numpy().astype(np.uint8) * 255
+depth_map = ((prediction - prediction.min()) / (prediction.max() - prediction.min()) * 255).cpu().numpy().astype(np.uint8)
 
-# Invert the mask
-mask = cv2.bitwise_not(mask)
 
-# Apply the mask to the main image
-foreground = cv2.bitwise_and(img, img, mask=mask)
 
 
 # Display the masked &depth map image
-cv2.imshow('Masked Image', foreground)
-cv2.imshow('Depth Map', mask)
+cv2.imshow('Depth Map', depth_map)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
