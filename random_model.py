@@ -5,11 +5,11 @@ import cv2
 import json
 
 # Load your pre-trained classifier model
-model_path = "/home/nicky-blackburn/Documents/Fursona-Detector/fursonaclassifiyer.h5"
+model_path = "/home/nicky-blackburn/Documents/Fursona-Detector/fursonaclassifiyer.keras"
 loaded_model = tf.keras.models.load_model(model_path)
 
 # Load and preprocess the image you want to classify at full resolution
-image_path = "/home/nicky-blackburn/Documents/Fursona-Detector/test/20230205_142354.jpg"
+image_path = "/home/nicky-blackburn/Documents/Fursona-Detector/test/pittsburgh-anthrocon.jpg"
 full_res_img = cv2.imread(image_path)
 full_res_img = cv2.cvtColor(full_res_img, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
 img_array = cv2.resize(full_res_img, (150, 150))  # Resize to model input size

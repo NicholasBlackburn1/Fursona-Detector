@@ -52,3 +52,10 @@ For the data set we  need to collect a bunch of different fursonas with their ta
 We **collect** the data and sort it into its own catagory, **AGGEGATE** it and then we Comb threw it and **Beutifiy** it which means remove junk data from the collected data and then we **Train** the model.
 
 and im currently working on getting the beutifiyer working
+
+
+1. got the background removed
+
+
+
+***w

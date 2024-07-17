@@ -66,7 +66,7 @@ model = Sequential([
 ])
 
 # Compile Model
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='nadam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Configure TensorBoard callback
 tensorboard_callback = TensorBoard(log_dir='./logs', histogram_freq=1, write_graph=True, write_images=True)
@@ -74,7 +74,7 @@ tensorboard_callback = TensorBoard(log_dir='./logs', histogram_freq=1, write_gra
 # Train Model with TensorBoard callback
 history = model.fit(
     train_generator,
-    epochs=45,
+    epochs=80,
     validation_data=validation_generator,
     callbacks=[tensorboard_callback]
 )

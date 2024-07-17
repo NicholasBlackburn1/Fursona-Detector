@@ -9,7 +9,7 @@ model_path = "/home/nicky-blackburn/Documents/Fursona-Detector/fursonaclassifiye
 loaded_model = tf.keras.models.load_model(model_path)
 
 # Load and preprocess the image you want to classify at full resolution
-image_path = "/home/nicky-blackburn/Documents/Fursona-Detector/test/20230205_142354.jpg"
+image_path = "/home/nicky-blackburn/Documents/Fursona-Detector/test/pittsburgh-anthrocon.jpg"
 full_res_img = cv2.imread(image_path)
 full_res_img = cv2.cvtColor(full_res_img, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
 img_array = cv2.resize(full_res_img, (150, 150))  # Resize to model input size
@@ -23,7 +23,7 @@ with open(json_path, 'r') as json_file:
 
 
 #the thresh of too keep the ml at bey 
-threshold = 0.5
+threshold = 0.3
 
 # Loop through each class label
 for class_label in class_labels:

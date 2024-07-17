@@ -4,7 +4,7 @@ import torch
 import numpy as np
 import logger
 
-
+# removes the background when the image is downloaded
 def backgrounf_remover(input_image: str, ):
     logger.PipeLine_init("Loading the midas model..")
 
@@ -72,7 +72,7 @@ def backgrounf_remover(input_image: str, ):
     print("Max depth:", prediction.max().item())
 
     # Visualize the depth map
-    depth_threshold = 0.5
+    depth_threshold = 0.6
     depth_map = ((prediction - prediction.min()) / (prediction.max() - prediction.min()) * 255).cpu().numpy().astype(np.uint8)
 
     normalized_depth = (prediction - prediction.min()) / (prediction.max() - prediction.min())
@@ -98,3 +98,7 @@ def backgrounf_remover(input_image: str, ):
 
         logger.warning("got bacckground removed! saving image....")
         cv2.imwrite(input_image, cv2.cvtColor(foreground, cv2.COLOR_RGB2BGR))
+
+# checks for humans in the pic and removes them 
+def human_detection():
+    pass
